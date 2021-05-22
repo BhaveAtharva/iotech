@@ -1,0 +1,125 @@
+*{
+    overflow-x: hidden;
+}
+
+body{
+    position: relative;
+    background-color: #374149;
+    font-family: 'Poppins', sans-serif;
+    height: 100vh;
+}
+
+.navbar{
+    background-color: black;
+}
+
+.ellipse{
+    position: absolute;
+    top: 0;
+    right: 0;
+    overflow-x: hidden;
+}
+
+.bellipse{
+    position: absolute;
+    left: 0;
+    bottom: 0;
+}
+
+.girl{
+    margin-left: 5%;
+    margin-top: 10%;
+}
+
+.girlsvg{
+    width: 70%;
+    overflow-x: hidden;
+}
+
+.header-text{
+    margin-top: 10%;
+    margin-left: 0;
+}
+
+#typed-text{
+    font-family: 'Poppins', sans-serif;
+    overflow-y: hidden;
+}
+
+.circuit{
+    position: absolute;
+    bottom: 0%;
+    left: 80%;
+    overflow-x: hidden;
+}
+
+#navbarNav{
+    width: 30%;
+}
+
+.navbar-nav{
+    width: 100%;
+}
+
+.logo{
+    width: 70%;
+}
+
+.nav-item{
+    width: 20%;
+}
+
+.btn-outline-success{
+    border-color: black;
+}
+/* #6b6ecc */
+.modal-content{
+    background-color: #374149;
+    color: white;
+    border-radius: 5%;
+    font-weight: 700;
+    font-size: medium;
+}
+
+.cross{
+    color: #374149;
+}
+
+/* #7fffd4 */
+.register-input:focus{
+    background-color: #c4ebaa ;
+}
+
+/* .register-submit:hover{
+    background-color: #1ECD97;
+} */
+.register-submit{
+    position: relative;
+    width: 80%;
+    border-radius: 20px;
+    overflow-x: visible;
+    letter-spacing: 5%;
+    left: 8%;
+    border: solid 2px white;
+    color: white;
+}
+/* 
+.keysvg{
+    width: 28px;
+    height: 28px;
+} */
+
+.modal-title{
+    width: 100%;
+    font-weight: 600;
+}
+
+.btn:focus{
+    outline: none;
+    box-shadow: none;
+}
+
+.dashboard{
+
+    margin-top: 5%;
+}

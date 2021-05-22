@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block modalClickHeader %}
+<h1 id="typed-text"></h1>
+{% endblock %}
+
+{% block scriptTypeHome %}
+<script>
+    new TypeIt("#typed-text", {
+    strings: "All Appliances at your fingertips...",
+    speed: 75,
+    loop: false,
+    cursor: true
+    }).go();
+</script>
+{% endblock %}

@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+
+{% block modalClickHeader %}
+<h1>All appliances at your finger tips..<span><h1 style="display:inline-flex;" id="typed-text"></h1></span></h1>
+{% endblock %}
+
+
+{% block signup %}
+<div class="modal fade" id="signupModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header text-center border-bottom-0">
+                <h3 class="modal-title text-center ">Register</h3>
+                <button class="close" data-dismiss="modal"><span class="cross" aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <form action="{{ url_for('signup') }}" method="POST">
+
+                    <div class="form-group row">  
+                        <div class="col-1"></div>                              
+                        <div class="col-2">
+                            <label for="username" class="col-form-label">
+                                <img class="mansvg" src="{{ url_for('static', filename= 'assets/man.svg') }}">
+                            </label>
+                        </div>
+                        
+                        <div class="col-7">  
+                                {{ form.username(class_='form-control register-input', placeholder='Username', autocomplete='off', autofocus=true) }}
+                                
+                                <ul>
+                                    {% for error in form.username.errors %}
+                                        <li>{{ error }}</li>
+                                    {% endfor %}
+                                </ul>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-1"></div>                              
+                        <div class="col-2">
+                            <label for="password" class="col-form-label">
+                                <img class="keysvg" src="{{ url_for('static', filename= 'assets/key.svg') }}">
+                            </label>
+                        </div>
+                        <div class="col-7">
+                                {{ form.password(class_='form-control register-input', placeholder='password') }}
+                                <ul>
+                                    {% for error in form.username.errors %}
+                                        <li>{{ error }}</li>
+                                    {% endfor %}
+                                </ul>
+                            
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-1"></div>                              
+                        <div class="col-2">
+                            <label for="confirm_password" class="col-form-label">
+                                <img class="keysvg" src="{{ url_for('static', filename= 'assets/key.svg') }}">
+                            </label>
+                        </div>
+                        <div class="col-7">
+                                {{ form.confirm_password(class_='form-control register-input', placeholder='re-type password') }}
+                                <ul>
+                                    {% for error in form.username.errors %}
+                                        <li>{{ error }}</li>
+                                    {% endfor %}
+                                </ul>
+                        
+                        </div>
+                    </div>
+                    <div class="form-group row justify-content-center align-content-center"> 
+                        <div class="col-2"></div>
+                        <div class="col-8 align-self-center">
+                            <input class="register-submit btn btn-outline-success btn-lg" id="registerSubmit" type="submit" value="Signup">
+                        </div>
+                        <div class="col-2"></div>
+                    </div>
+                    {{ form.csrf_token }}
+                </form>                        
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block signupModalScript %}
+<script type="text/javascript">
+    $(window).on('load', function() {
+        $('#signupModal').modal('show');
+    });
+</script>
+{% endblock %}
+
+
+
+{% block scriptTypeSignup %}
+<script>
+    new TypeIt("#typed-text", {
+    strings: ".",
+    speed: 75,
+    loop: false,
+    cursor: true
+    }).go();
+</script>
+{% endblock %}

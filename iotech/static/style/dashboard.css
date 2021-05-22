@@ -1,0 +1,24 @@
+*{
+    overflow-x: hidden;
+}
+body{
+    position: relative;
+    background-color: #374149;
+    font-family: 'Poppins', sans-serif;
+    height: 100vh;
+}
+
+.navbar{
+    background-color: black;
+}
+
+.video-stream{
+    border-radius: 10%;
+    /* background-image: url("https://i.imgur.com/GD49KDv.png"); */
+    
+}
+/*  */
+.vid-button{
+    margin-top: 2%;
+    margin-left: 2%;
+}
