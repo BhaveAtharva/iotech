@@ -1,4 +1,6 @@
 {% extends 'base.html' %}
+{% import "bootstrap/wtf.html" as wtf %}
+
 {% block modalClickHeader %}
 <h1>All appliances at your finger tips..<span><h1 style="display:inline-flex;" id="typed-text"></h1></span></h1>
 {% endblock %}
@@ -8,13 +10,16 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header text-center border-bottom-0">
-                <h3 class="modal-title text-center ">Register</h3>
+                <h3 class="modal-title text-center ">Sign in</h3>
                 <button class="close" data-dismiss="modal"><span class="cross" aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body">
                 <form action="{{ url_for('login') }}" method="POST">
-
-                    <div class="form-group row">  
+                    {{ form.hidden_tag() }}
+                    {{ wtf.form_field(form.username) }}
+                    {{ wtf.form_field(form.password) }}
+                    {{ wtf.form_field(form.remember) }}
+                    <!-- <div class="form-group row">  
                         <div class="col-1"></div>                              
                         <div class="col-2">
                             <label for="username" class="col-form-label">
@@ -55,7 +60,10 @@
                         </div>
                         <div class="col-2"></div>
                     </div>
-                    {{ form.csrf_token }}
+                    {{ form.csrf_token }} -->
+                    <div class="col-8 align-self-center">
+                        <input class="register-submit btn btn-outline-success btn-lg" id="registerSubmit" type="submit" value="Login">
+                    </div>
                 </form>                        
             </div>
         </div>

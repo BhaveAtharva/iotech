@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% import "bootstrap/wtf.html" as wtf %}
 
 {% block modalClickHeader %}
 <h1>All appliances at your finger tips..<span><h1 style="display:inline-flex;" id="typed-text"></h1></span></h1>
@@ -15,8 +16,11 @@
             </div>
             <div class="modal-body">
                 <form action="{{ url_for('signup') }}" method="POST">
-
-                    <div class="form-group row">  
+                    {{ form.hidden_tag() }}
+                    {{ wtf.form_field(form.username) }}
+                    {{ wtf.form_field(form.password) }}
+                    {{ wtf.form_field(form.remember) }}
+                    <!-- <div class="form-group row">  
                         <div class="col-1"></div>                              
                         <div class="col-2">
                             <label for="username" class="col-form-label">
@@ -75,7 +79,7 @@
                         </div>
                         <div class="col-2"></div>
                     </div>
-                    {{ form.csrf_token }}
+                    {{ form.csrf_token }} -->
                 </form>                        
             </div>
         </div>

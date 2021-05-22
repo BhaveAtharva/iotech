@@ -5,7 +5,7 @@ from flask_bcrypt import Bcrypt
 import mediapipe as mp
 import cv2
 from flask_socketio import SocketIO, emit
-
+from flask_bootstrap import Bootstrap
 
 # from flask_bootstrap import Bootstrap
 
@@ -20,6 +20,6 @@ if uri.startswith("postgres://"):
 
 app.config['SQLALCHEMY_DATABASE_URI'] = uri
 db = SQLAlchemy(app)
-# Bootstrap(app)
+Bootstrap(app)
 socketio = SocketIO(app, cors_allowed_origins="*")
 from iotech import routes
