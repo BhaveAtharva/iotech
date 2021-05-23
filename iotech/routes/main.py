@@ -2,7 +2,7 @@ from flask import Flask, render_template, redirect, request, Response, Blueprint
 from iotech.models import User
 from iotech.wtform_fields import RegistrationForm, LoginForm
 # from iotech import app, db, bcrypt, socketio
-from iotech.hand_recognition import gen_frames
+
 from flask_socketio import emit
 from io import StringIO, BytesIO
 import io
@@ -12,10 +12,10 @@ import cv2
 import imutils
 import numpy as np
 import base64
-from iotech import mp
+
 from iotech import cv2
-from keras.models import load_model
-from keras.preprocessing.image import img_to_array
+from tensorflow.keras.models import load_model
+from tensorflow.keras.preprocessing.image import img_to_array
 from iotech.extensions import db, bcrypt, socketio
 
 main = Blueprint('main', __name__)

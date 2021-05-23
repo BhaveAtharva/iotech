@@ -2,7 +2,7 @@ from flask import Flask, render_template, redirect, request
 
 from iotech.wtform_fields import *
 # from iotech.models import User
-import mediapipe as mp
+
 import cv2
 from .extensions import db, bootstrap, bcrypt, socketio
 
