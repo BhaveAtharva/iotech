@@ -45,6 +45,7 @@
                 <a class="btn btn-dark btn-lg" href="#">stop</a>
             </div>            
         </div>
+        <button id="start" class="btn btn-lg btn-primary">Start</button>
 
 
         <script>
@@ -70,18 +71,17 @@
         
             video.width = 600; 
             video.height = 375;
-        
-            if (navigator.mediaDevices.getUserMedia) {
-                navigator.mediaDevices.getUserMedia({ video: true })
-                .then(function (stream) {
-                    video.srcObject = stream;
-                    video.play();
-                })
-                .catch(function (err0r) {
-                    console.log(err0r)
-                    console.log("Something went wrong!");
-                });
-            }
+                if (navigator.mediaDevices.getUserMedia) {
+                    navigator.mediaDevices.getUserMedia({ video: true })
+                    .then(function (stream) {
+                        video.srcObject = stream;
+                        video.play();
+                    })
+                    .catch(function (err0r) {
+                        console.log(err0r)
+                        console.log("Something went wrong!");
+                    });
+                }
             var cap
             var src
             var dst

@@ -15,11 +15,13 @@
                 <button class="close" data-dismiss="modal"><span class="cross" aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body">
-                <form action="{{ url_for('signup') }}" method="POST">
+                <form action="{{ url_for('main.signup') }}" method="POST">
                     {{ form.hidden_tag() }}
                     {{ wtf.form_field(form.username) }}
+                    {{ wtf.form_field(form.email) }}
                     {{ wtf.form_field(form.password) }}
-                    {{ wtf.form_field(form.remember) }}
+                    {{ wtf.form_field(form.confirm_password) }}
+                    
                     <!-- <div class="form-group row">  
                         <div class="col-1"></div>                              
                         <div class="col-2">
@@ -80,6 +82,9 @@
                         <div class="col-2"></div>
                     </div>
                     {{ form.csrf_token }} -->
+                    <div class="col-8 align-self-center">
+                        <input class="register-submit btn btn-outline-success btn-lg" id="registerSubmit" type="submit" value="Login">
+                    </div>
                 </form>                        
             </div>
         </div>

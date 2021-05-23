@@ -42,11 +42,11 @@
             <ul class="navbar-nav justify-content-around">
                 <li class="nav-item active">
                     <!-- <a class="nav-link btn btn-outline-success" data-toggle="modal" data-target="#signupModal" id="button-modal-login">Register</a> -->
-                    <a class="nav-link btn btn-outline-success" data-target="#signupModal" id="button-modal-login" href="{{url_for("signup")}}">Register</a>
+                    <a class="nav-link btn btn-outline-success" data-target="#signupModal" id="button-modal-login" href="{{url_for('main.signup')}}">Register</a>
                 </li>
                 <li class="nav-item active">
                     <!-- <a class="nav-link btn btn-outline-success" data-toggle="modal" data-target="#loginModal" id="button-modal-login">Sign in</a> -->
-                    <a class="nav-link btn btn-outline-success" data-target="#loginModal" id="button-modal-login" href="{{url_for("login")}}">Sign in</a>
+                    <a class="nav-link btn btn-outline-success" data-target="#loginModal" id="button-modal-login" href="{{url_for('main.login')}}">Sign in</a>
                 </li>
             </ul>
         </div>
@@ -61,7 +61,7 @@
             {% endblock %}
             <div class="row">
                 <div class="col">
-                    <a href="{{ url_for("dashboard") }}" class="dashboard btn btn-lg btn-outline-success">Dashboard</a>
+                    <a href="{{ url_for('main.dashboard') }}" class="dashboard btn btn-lg btn-outline-success">Dashboard</a>
                 </div>
             </div>
         </div>

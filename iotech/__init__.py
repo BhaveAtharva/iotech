@@ -1,25 +1,29 @@
 from flask import Flask, render_template, redirect, request
-from flask_sqlalchemy import SQLAlchemy
+
 from iotech.wtform_fields import *
-from flask_bcrypt import Bcrypt
+# from iotech.models import User
 import mediapipe as mp
 import cv2
-from flask_socketio import SocketIO, emit
-from flask_bootstrap import Bootstrap
+from .extensions import db, bootstrap, bcrypt, socketio
+
+from .routes.main import main
+from .commands import create_tables
 
 # from flask_bootstrap import Bootstrap
 
-app = Flask(__name__)
+def create_app(config_file='settings.py'):
 
-app.secret_key = "15e653aeca7896d2adaa414c0f04e17985a136af57dc60c665ed1d6d28d9eed7"
-bcrypt = Bcrypt(app)
+    app = Flask(__name__)
 
-uri = 'postgres://dgzsajcfmirpue:b5a99a691fb2646cf83ee1082baa909eb70a8528ba726adfc106b5ea852004e4@ec2-54-225-228-142.compute-1.amazonaws.com:5432/d71tc2qd422mm6' # or other relevant config var
-if uri.startswith("postgres://"):
-    uri = uri.replace("postgres://", "postgresql://", 1)
+    app.config.from_pyfile(config_file)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = uri
-db = SQLAlchemy(app)
-Bootstrap(app)
-socketio = SocketIO(app, cors_allowed_origins="*")
-from iotech import routes
+
+    bcrypt.init_app(app)
+
+    db.init_app(app)
+    bootstrap.init_app(app)
+    socketio.init_app(app)
+    app.register_blueprint(main)
+    app.cli.add_command(create_tables)
+
+    return app
