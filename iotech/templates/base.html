@@ -1,3 +1,5 @@
+{% import "bootstrap/wtf.html" as wtf %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -39,16 +41,27 @@
                 <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav justify-content-around">
-                <li class="nav-item active">
-                    <!-- <a class="nav-link btn btn-outline-success" data-toggle="modal" data-target="#signupModal" id="button-modal-login">Register</a> -->
-                    <a class="nav-link btn btn-outline-success" data-target="#signupModal" id="button-modal-login" href="{{url_for('main.signup')}}">Register</a>
-                </li>
-                <li class="nav-item active">
-                    <!-- <a class="nav-link btn btn-outline-success" data-toggle="modal" data-target="#loginModal" id="button-modal-login">Sign in</a> -->
-                    <a class="nav-link btn btn-outline-success" data-target="#loginModal" id="button-modal-login" href="{{url_for('main.login')}}">Sign in</a>
-                </li>
-            </ul>
+            {% if current_user.is_authenticated %}
+                <ul class="navbar-nav justify-content-around">
+                    <li class="nav-item active">
+                        <!-- <a class="nav-link btn btn-outline-success" data-toggle="modal" data-target="#signupModal" id="button-modal-login">Register</a> -->
+                        <a class="nav-link btn btn-outline-success" href="{{url_for('main.logout')}}">Logout</a>
+                    </li>
+                </ul>
+            {% else %}
+
+                <ul class="navbar-nav justify-content-around">
+                    <li class="nav-item active">
+                        <!-- <a class="nav-link btn btn-outline-success" data-toggle="modal" data-target="#signupModal" id="button-modal-login">Register</a> -->
+                        <a class="nav-link btn btn-outline-success" data-target="#signupModal" id="button-modal-login" href="{{url_for('main.signup')}}">Register</a>
+                    </li>
+                    <li class="nav-item active">
+                        <!-- <a class="nav-link btn btn-outline-success" data-toggle="modal" data-target="#loginModal" id="button-modal-login">Sign in</a> -->
+                        <a class="nav-link btn btn-outline-success" data-target="#loginModal" id="button-modal-login" href="{{url_for('main.login')}}">Sign in</a>
+                    </li>
+                </ul>
+
+            {% endif %}
         </div>
     </nav>
 

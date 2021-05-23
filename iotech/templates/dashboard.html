@@ -24,31 +24,62 @@
         <div class="logo col-8">    
             <a class="navbar-brand" href="#"><img src="{{ url_for('static', filename='assets/logo.svg') }}" alt="logo"> IoTech</a>
         </div>    
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav justify-content-center">
+                <li class="nav-item active">
+                    <!-- <a class="nav-link btn btn-outline-success" data-toggle="modal" data-target="#signupModal" id="button-modal-login">Register</a> -->
+                    <a class="nav-link btn btn-outline-success" id="Logout" href="{{url_for('main.logout')}}">Logout</a>
+                </li>
+            </ul>
+        </div>
     </nav>
+    <div class="row">
+        <div class="col-6">
+            <div id="canvasContainer">
+                <canvas id="canvasOutput" height= "375" width="500"></canvas>
+            </div>
+                <video autoplay="true"  style="display:none;" id="videoElement"></video>
+                <canvas id="temp" height="375" width="500" style="height: 375; width: 500; display:none;">
+                </canvas>
 
+            <div class = 'video'>
+                <img id="image">
+            </div>
+            
 
-        <div id="container" class="container">
-        
-            <canvas id="canvasOutput" height= "600" width="500"></canvas>
-            <video autoplay="true"  style="display:none;" id="videoElement"></video>
-            <canvas id="temp" height="375" width="500" style="height: 375; width: 500; display:none">
-    
-            </canvas>
+            <div class="row vid-button">
+                <div class="col-4 offset-4">
+                    <a class="btn btn-danger" href="{{ url_for('main.home') }}">stop</a>
+                </div>            
+            </div>
         </div>
-        
-        <div class = 'video'>
-            <img id="image">
+        <div class="col">
+            <div class="container">
+                <div class="row align-text-center">
+                    <div class="col-6">
+                        <h4>Temperature</h4>
+                    </div>
+                    <div class="col">
+                        <h4>
+                            humidity
+                        </h4>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col offset-3">
+                        <h3>Appliance being controlled:</h3>
+                    </div>
+                </div>
+            </div>
         </div>
-        
-        <div class="row vid-button">
-            <div class="col-4 offset-2">
-                <a class="btn btn-dark btn-lg" href="#">stop</a>
-            </div>            
-        </div>
+    </div>
 
 
         <script>
-            var socket = io('http://192.168.1.7:5000');
+            var socket = io.connect('http://'+document.domain+':'+ location.port);
         
             socket.on('connect', function(){
                 console.log("Connected...!", socket.connected)
@@ -63,6 +94,7 @@
                     ctx.drawImage(image_new, 0,0, 500, 375)
                 }
                 image_new.src = stringData
+                
                 // ctx.drawImage(stringData, 0, 0)
             })
         
@@ -70,18 +102,17 @@
         
             video.width = 600; 
             video.height = 375;
-        
-            if (navigator.mediaDevices.getUserMedia) {
-                navigator.mediaDevices.getUserMedia({ video: true })
-                .then(function (stream) {
-                    video.srcObject = stream;
-                    video.play();
-                })
-                .catch(function (err0r) {
-                    console.log(err0r)
-                    console.log("Something went wrong!");
-                });
-            }
+                if (navigator.mediaDevices.getUserMedia) {
+                    navigator.mediaDevices.getUserMedia({ video: true })
+                    .then(function (stream) {
+                        video.srcObject = stream;
+                        video.play();
+                    })
+                    .catch(function (err0r) {
+                        console.log(err0r)
+                        console.log("Something went wrong!");
+                    });
+                }
             var cap
             var src
             var dst
@@ -89,7 +120,7 @@
                     src = new cv.Mat(video.height, video.width, cv.CV_8UC4);
                     dst = new cv.Mat(video.height, video.width, cv.CV_8UC1);
                     cap = new cv.VideoCapture(video);
-                    const FPS = 44;
+                    const FPS = 22;
                     setInterval(() => {
                         cap.read(src);
                 

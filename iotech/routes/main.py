@@ -1,8 +1,6 @@
-from flask import Flask, render_template, redirect, request, Response, Blueprint
+from flask import Flask, render_template, redirect, request, Response, Blueprint, url_for
 from iotech.models import User
 from iotech.wtform_fields import RegistrationForm, LoginForm
-# from iotech import app, db, bcrypt, socketio
-
 from flask_socketio import emit
 from io import StringIO, BytesIO
 import io
@@ -12,17 +10,13 @@ import cv2
 import imutils
 import numpy as np
 import base64
-
 from iotech import cv2
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.image import img_to_array
 from iotech.extensions import db, bcrypt, socketio
+from flask_login import login_user, current_user, logout_user, logout_user, login_required
 
 main = Blueprint('main', __name__)
-# @app.route('/')
-# @app.route('/base')
-# def hello():
-#     return render_template('base.html')
 
 @main.route('/')
 def home():
@@ -31,112 +25,46 @@ def home():
 
 @main.route('/signup', methods=['GET', 'POST'])
 def signup():
+    if current_user.is_authenticated:
+        return redirect(url_for('main.dashboard'))
     form = RegistrationForm(request.form)
-    print(type(form))
-    print(form)
-    if form.validate_on_submit() and not User.query.filter_by(username=form.username.data).first():  
+    if form.validate_on_submit():
         username = form.username.data
         password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-        print(bcrypt.check_password_hash(password, form.confirm_password.data))
-        print(len(password))
-        user = User(username=form.username.data, password=password)
+        user = User(username=form.username.data, password=password, email=form.email.data)
+
         db.session.add(user)
         db.session.commit()
-        return "success"
-    if User.query.filter_by(username=form.username.data).first():
-        form.username.errors.append('username already taken')
+        login_user(user)
+        return redirect(url_for('main.home'))
     return render_template('signup.html', form=form)
 
 @main.route('/login', methods=['GET', 'POST'])
 def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('main.dashboard'))
     form = LoginForm(request.form)
     if form.validate_on_submit():
         username = form.username.data
         user = User.query.filter_by(username=username).first()
         if bcrypt.check_password_hash(user.password, form.password.data):
-            return "loggedin"
+            login_user(user, remember= form.remember.data)
+            return redirect(url_for('main.dashboard'))
+        else:
+            form.password.errors.append('incorrect password')
 
     return render_template('login.html', form=form)
 
+@main.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('main.home'))
+
 @main.route('/dashboard')
+@login_required
 def dashboard():
-    return render_template('hand.html')
-
-# @app.route('/video_feed')
-# def video_feed():
-#     return Response(gen_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
+    return render_template('dashboard.html')
     
-
-
-@main.route('/babecam')
-def babecam():
-    return render_template('bebcam.html')
-
-# @socketio.on('image')
-# def image(data):
-    
-#     mp_drawing = mp.solutions.drawing_utils
-#     mp_hands = mp.solutions.hands
-#     hands = mp_hands.Hands(
-#         min_detection_confidence=0.5, min_tracking_confidence=0.5)
-#     sbuf = StringIO()
-#     sbuf.write(data)
-    
-#     # decode and convert into image
-#     b = io.BytesIO(base64.b64decode(data))
-#     pimg = Image.open(b)
-    
-#     frame = cv2.cvtColor(cv2.flip(np.array(pimg), 1), cv2.COLOR_BGR2RGB)
-
-#     # pimg = np.asarray(PIL.Image.open(b))
-#     # print(type(pimg))
-#     # exit()
-#     # converting RGB to BGR, as opencv standards
-#     # pimg = cv2.cvtColor(np.float64(pimg), cv2.COLOR_BGR2RGB)
-
-#     frame.flags.writeable = False
-#     results = hands.process(frame)
-
-#     frame.flags.writeable = True
-#     # frame = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
-#     if results.multi_hand_landmarks:
-#         for hand_landmarks in results.multi_hand_landmarks:
-#             mp_drawing.draw_landmarks(
-#             frame, hand_landmarks, mp_hands.HAND_CONNECTIONS)
-
-#     # ret, buffer = cv2.imencode('.jpg', pimg)
-#     # pimg = cv2.flip(pimg, 1)
-
-#     # frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-#     imgencode = cv2.imencode('.png', frame)[1]
-
-    
-#     # pimg = PIL.Image.fromarray(np.uint8(pimg))
-#     # base64 encode
-#     stringData = base64.b64encode(imgencode).decode('utf-8')
-#     b64_src = 'data:image/png;base64,'
-   
-   
-   
-#     stringData = b64_src + stringData
-
-
-
-#     # frame = cv2.cvtColor(np.array(pimg), cv2.COLOR_RGB2BGR)
-
-#     #  Process the image frame
-#     # frame = imutils.resize(frame, width=700)
-#     # frame = cv2.flip(frame, 1)
-#     # imgencode = cv2.imencode('.png', frame)[1]
-#     # base64 encode
-#     # stringData = base64.b64encode(imgencode).decode('utf-8')
-#     # b64_src = 'data:image/png;base64,'
-#     # stringData = b64_src + stringData
-
-#     # emit the frame back
-#     emit('response_back', stringData)
-#     # emit('response_back', stringData)
-
 classifier =load_model(r'iotech/static/assets/hand_gesture.h5')
 labels = ['Five', 'Four', 'One', 'Three', 'Two']
 
