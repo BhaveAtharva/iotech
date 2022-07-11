@@ -26,5 +26,5 @@ def create_app(config_file='settings.py'):
     socketio.init_app(app)
     app.register_blueprint(main)
     app.cli.add_command(create_tables)
-
+    
     return app
