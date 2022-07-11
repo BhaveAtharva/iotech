@@ -103,7 +103,8 @@ def image(data):
         cv2.putText(frame, 'Accuracy - '+str(max(prediction)*100)[0:6], (20, 450), cv2.FONT_HERSHEY_SIMPLEX, 1, (0,255,255), 2)
     else:
         cv2.putText(frame, 'No Hands Detected', (30, 80), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
-    requests.get("http://192.168.1.10/"+label)
+    # requests.get("http://192.168.1.10/"+label)
+    # requests.get("http://")
     imgencode = cv2.imencode('.png', frame)[1]
     stringData = base64.b64encode(imgencode).decode('utf-8')
     b64_src = 'data:image/png;base64,'
